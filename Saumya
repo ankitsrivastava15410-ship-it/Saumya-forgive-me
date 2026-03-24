@@ -10,7 +10,7 @@ index.html
 body{
   margin:0;
   font-family: system-ui;
-  background:#fff;
+  background:linear-gradient(135deg,#dbeafe,#ffffff);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -18,13 +18,7 @@ body{
   overflow:hidden;
 }
 
-.overlay{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,0.4), transparent);
-  z-index:-1;
-}
-
+/* card */
 .card{
   max-width:360px;
   padding:25px;
@@ -51,6 +45,7 @@ button{
 .yes{background:#000;color:#fff}
 .no{background:#eee}
 
+/* animations */
 @keyframes fade{
   from{opacity:0; transform:translateY(10px)}
   to{opacity:1}
@@ -74,6 +69,24 @@ button{
   50%{transform:scale(1.2)}
 }
 
+/* avatar */
+.avatar{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  margin:0 auto 10px;
+  background:url('photo.jpg') center/cover no-repeat;
+  box-shadow:0 0 20px rgba(0,0,0,0.3);
+  animation:floatAvatar 3s ease-in-out infinite;
+  border:3px solid #fff;
+}
+
+@keyframes floatAvatar{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+/* music button */
 .top{
   position:absolute;
   top:10px;
@@ -86,9 +99,8 @@ button{
 
 <body>
 
-<div class="overlay"></div>
-
 <div class="top" onclick="toggleMusic()">🔊</div>
+
 <audio id="bgMusic" loop>
   <source src="https://actions.google.com/sounds/v1/ambiences/soft_wind.ogg">
 </audio>
@@ -101,11 +113,18 @@ const music=document.getElementById("bgMusic");
 let musicOn=false;
 
 function toggleMusic(){
-  if(musicOn){music.pause();event.target.innerText="🔇";}
-  else{music.play();event.target.innerText="🔊";}
+  if(musicOn){
+    music.pause();
+    event.target.innerText="🔇";
+  } else {
+    music.volume = 1.0;
+    music.play();
+    event.target.innerText="🔊";
+  }
   musicOn=!musicOn;
 }
 
+// typing effect
 function typeText(el,text,speed=28){
   el.innerHTML="";
   let i=0;
@@ -120,7 +139,7 @@ function typeText(el,text,speed=28){
 function main(){
   app.innerHTML=`
   <div class="card">
-    <div style="font-size:60px">🍜🤖</div>
+    <div class="avatar"></div>
     <h2 class="heart">Forgive me Saumya 🥺</h2>
     <p id="text"></p>
 
@@ -129,19 +148,20 @@ function main(){
   </div>
   `;
   typeText(document.getElementById("text"),
-  "I know I messed up...\n\nAnd I know you didn't deserve that.");
+  "I know I was wrong...\n\nPlease forgive me 🥺");
 }
 
 // YES
 function yes(){
   app.innerHTML=`
   <div class="card">
+    <div class="avatar"></div>
     <h2 class="heart">Thank you Saumya ❤️</h2>
     <p id="text"></p>
   </div>
   `;
   typeText(document.getElementById("text"),
-  "You are seriously the best friend I could ever ask for 💫\n\nAnd yeah... you're very important to me\n\nMore than I usually say\n\nThank you for forgiving me 🥺\n\nNext Maggi is on me 🍜😌");
+  "You are seriously the best friend I could ever ask for 💫\n\nYou are very important to me 🫶\n\nThank you for forgiving me 🥺\n\nI promise I'll never do it again");
 
   celebration();
 }
@@ -150,6 +170,7 @@ function yes(){
 function no1(){
   app.innerHTML=`
   <div class="card">
+    <div class="avatar"></div>
     <h2>Please think again 🥺</h2>
     <p id="text"></p>
 
@@ -165,6 +186,7 @@ function no1(){
 function no2(){
   app.innerHTML=`
   <div class="card">
+    <div class="avatar"></div>
     <h2>😂 Option Denied</h2>
     <p id="text"></p>
 
@@ -172,15 +194,15 @@ function no2(){
   </div>
   `;
   typeText(document.getElementById("text"),
-  "Plssss naaa 🥺\n\nTum mere saath phas gayi ho lifetime ke liye 😎\n\nAur waise bhi...\n\nMaggi partners don't break up 🍜😂");
+  "Plssss naaa 🥺\n\nYou really can't escape this 😂\n\nJust forgive me already ❤️");
 }
 
-// CELEBRATION
+// celebration
 function celebration(){
   for(let i=0;i<25;i++){
     let e=document.createElement("div");
     e.className="float";
-    e.innerText=Math.random()>0.5?"🎈":"🍜";
+    e.innerText=Math.random()>0.5?"🎈":"✨";
     e.style.left=Math.random()*100+"vw";
     e.style.animationDuration=(3+Math.random()*3)+"s";
     document.body.appendChild(e);
@@ -193,3 +215,4 @@ main();
 
 </body>
 </html>
+
